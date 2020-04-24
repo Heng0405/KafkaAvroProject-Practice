@@ -19,7 +19,11 @@ public class KafkaProducer {
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(KafkaProducer.class);
 
 
+    public KafkaProducer() {
+    }
+
     public void run() throws TwitterException, IOException {
+        logger.info("--------------Send to Kafka-----------------");
         final KafkaUtils kafkaUtils = new KafkaUtils();
         final Schema schema = kafkaUtils.createSchema();
         final Producer producer = KafkaUtils.kafkaConfig();
@@ -32,6 +36,7 @@ public class KafkaProducer {
 
             public void onStatus(Status status) {
                 TweetObject tweetObject = TwitterParser.parseStatus(status);
+
                 GenericRecord genericRecord = new GenericData.Record(schema);
                 genericRecord.put("statusId", tweetObject.statusId);
                 genericRecord.put("displayName", tweetObject.displayName);

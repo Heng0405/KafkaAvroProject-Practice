@@ -2,6 +2,7 @@ package utils;
 
 import config.ApplicationProperties;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
+import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 import org.apache.avro.Schema;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -20,16 +21,18 @@ public class KafkaUtils {
     public static Producer kafkaConfig() throws IOException {
 
         logger.info("-----------------Constructing Kafka Producer-----------------------");
-        //Properties kafkaProperties = ApplicationProperties.getInstance();
-        Properties kafkaProperties = new Properties();
-        //kafkaProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getProperty("bootstrapServers"));
-        kafkaProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "hadoop000:9092");
+        Properties kafkaProperties = ApplicationProperties.getInstance();
+        //Properties kafkaProperties = new Properties();
+        kafkaProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,"hadoop000:9092");
         kafkaProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
-                KafkaAvroSerializer.class);
+                StringSerializer.class.getName());
         kafkaProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-                KafkaAvroSerializer.class);
+                KafkaAvroSerializer.class.getName());
+
+        kafkaProperties.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG,
+                "http://hadoop000:8081");
         kafkaProperties.put(ProducerConfig.ACKS_CONFIG, "all");
-        Producer kafkaProducer = new KafkaProducer(kafkaProperties);
+        final Producer kafkaProducer = new KafkaProducer(kafkaProperties);
         return kafkaProducer;
 
     }
