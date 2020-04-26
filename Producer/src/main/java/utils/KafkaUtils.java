@@ -28,7 +28,6 @@ public class KafkaUtils {
                 StringSerializer.class.getName());
         kafkaProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
                 KafkaAvroSerializer.class.getName());
-
         kafkaProperties.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG,
                 "http://hadoop000:8081");
         kafkaProperties.put(ProducerConfig.ACKS_CONFIG, "all");

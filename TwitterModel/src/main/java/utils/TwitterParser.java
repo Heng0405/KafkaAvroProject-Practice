@@ -9,7 +9,7 @@ public class TwitterParser {
         TweetObject tweetObject = new TweetObject();
         tweetObject.setStatusId(status.getId());
         tweetObject.setDisplayName(status.getUser().getScreenName());
-        tweetObject.setDate(status.getCreatedAt());
+        tweetObject.setDate(status.getCreatedAt().getTime());
         tweetObject.setRetweetCount(status.getRetweetCount());
         tweetObject.setTweetText(status.getText());
         return tweetObject;

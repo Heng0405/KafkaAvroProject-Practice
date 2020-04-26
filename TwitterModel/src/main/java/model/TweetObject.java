@@ -10,7 +10,7 @@ public class TweetObject {
 
     public String displayName;
 
-    public Date date;
+    public Long date;
 
     public int retweetCount;
 
@@ -24,7 +24,7 @@ public class TweetObject {
         return displayName;
     }
 
-    public Date getDate() {
+    public Long getDate() {
         return date;
     }
 
@@ -48,7 +48,7 @@ public class TweetObject {
                 '}';
     }
 
-    public TweetObject(Long statusId, String displayName, Date date, int retweetCount, int favoriteCount, String country, String countryCode, String source, String tweetText) {
+    public TweetObject(Long statusId, String displayName, Long date, int retweetCount, int favoriteCount, String country, String countryCode, String source, String tweetText) {
         this.statusId = statusId;
         this.displayName = displayName;
         this.date = date;
@@ -65,7 +65,7 @@ public class TweetObject {
         this.displayName = displayName;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Long date) {
         this.date = date;
     }
 
