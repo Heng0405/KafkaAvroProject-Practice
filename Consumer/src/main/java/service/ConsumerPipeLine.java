@@ -2,8 +2,11 @@ package service;
 
 import config.ApplicationProperties;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
+import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -18,12 +21,14 @@ import java.util.*;
 public class ConsumerPipeLine {
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ConsumerPipeLine.class);
 
+    public ConsumerPipeLine() {
+    }
 
-    public KafkaConsumer run() throws IOException {
-        logger.info("Start Stream");
+    public void run() throws IOException {
+        logger.info("----------------------Start Stream-----------------------------");
 
-        //SparkConf conf = new SparkConf().setMaster("local[2]").setAppName("ConsumerPipeLine");
-        //JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(1));
+/*        SparkConf conf = new SparkConf().setMaster("local[2]").setAppName("ConsumerPipeLine");
+        JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(1));*/
 
 
 
@@ -34,13 +39,26 @@ public class ConsumerPipeLine {
         kafkaParams.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class.getName());
         kafkaParams.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaParams.getProperty("group.id"));
         kafkaParams.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, kafkaParams.getProperty("auto.offset.reset"));
+        kafkaParams.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, kafkaParams.getProperty("kafka.schema.registry.url"));
         kafkaParams.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
 
-        Collection<String> topics = Arrays.asList("TwitterAvro");
-        KafkaConsumer<String, GenericRecord> consumer = new KafkaConsumer<String, GenericRecord>(kafkaParams);
-        System.out.println(consumer.toString());
-        return consumer;
 
+
+        KafkaConsumer<String, GenericRecord> consumer = new KafkaConsumer<String, GenericRecord>(kafkaParams);
+        consumer.subscribe(Arrays.asList("TwitterAvro"));
+        try {
+            while (true) {
+                ConsumerRecords<String, GenericRecord> records = consumer.poll(1000);
+                for (ConsumerRecord<String, GenericRecord> record : records) {
+                    GenericRecord twitter = record.value();
+                    System.out.println("value = [twitter.statusId = " + twitter.get("statusId") + ", " + "twitter.ndisplayName = "
+                            + twitter.get("displayName") + ", " + "twitter.date = " + twitter.get("date")  + ", " + "twitter.tweetText = "+ twitter.get("tweetText")+"], "
+                            + "partition = " + record.partition() + ", " + "offset = " + record.offset());
+                }
+            }
+        } finally {
+            consumer.close();
+        }
 
 
 

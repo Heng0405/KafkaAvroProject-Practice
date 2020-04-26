@@ -19,20 +19,5 @@ public class Application {
 
 
 
-/*        Properties kafkaProperties = new Properties();
-        kafkaProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,"hadoop000:9092");
-        kafkaProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
-                StringSerializer.class.getName());
-        kafkaProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-                KafkaAvroSerializer.class.getName());
-
-        kafkaProperties.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG,
-                "http://hadoop000:8081");
-        kafkaProperties.put(ProducerConfig.ACKS_CONFIG, "all");
-        final Producer kafkaProducer = new KafkaProducer(kafkaProperties);
-
-        System.out.println(kafkaProducer.toString());*/
-
-
     }
 }

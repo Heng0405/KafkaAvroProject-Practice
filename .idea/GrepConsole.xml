@@ -21,7 +21,7 @@
                         <option name="contentType" value="ConsoleContent" />
                         <option name="grepModel">
                           <GrepModel>
-                            <option name="expression" value="" />
+                            <option name="expression" value="ERROR RestService:156 - Failed to send HTTP request to endpoint: http://hadoop000:8081/subjects/TwitterAvro-value/versions" />
                             <option name="unlessExpression" value="" />
                           </GrepModel>
                         </option>

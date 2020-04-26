@@ -6,8 +6,8 @@ public class Application {
 
     public static void main(String args[]) throws IOException {
 
-        ConsumerPipeLine consumerPipeLine = new ConsumerPipeLine();
-        consumerPipeLine.run();
+        ConsumerPipeLine pipeLine = new ConsumerPipeLine();
+        pipeLine.run();
     }
 
 }

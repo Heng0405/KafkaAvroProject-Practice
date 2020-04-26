@@ -23,13 +23,13 @@ public class KafkaUtils {
         logger.info("-----------------Constructing Kafka Producer-----------------------");
         Properties kafkaProperties = ApplicationProperties.getInstance();
         //Properties kafkaProperties = new Properties();
-        kafkaProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,"hadoop000:9092");
+        kafkaProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,kafkaProperties.getProperty("bootstrapServers"));
         kafkaProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 StringSerializer.class.getName());
         kafkaProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
                 KafkaAvroSerializer.class.getName());
         kafkaProperties.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG,
-                "http://hadoop000:8081");
+                kafkaProperties.getProperty("kafka.schema.registry.url"));
         kafkaProperties.put(ProducerConfig.ACKS_CONFIG, "all");
         final Producer kafkaProducer = new KafkaProducer(kafkaProperties);
         return kafkaProducer;
