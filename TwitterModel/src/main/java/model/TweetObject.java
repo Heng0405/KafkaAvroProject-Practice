@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TweetObject {
+public class TweetObject implements Serializable {
 
     public TweetObject(){};
 
