@@ -1,0 +1,27 @@
+{
+  \"type\": \"record\",
+  \"name\": \"TwitterObject\",
+  \"namespace\": \"org.example\",
+  \"fields\": [
+    {
+      \"name\": \"statusId\",
+      \"type\": \"long\"
+    },
+    {
+      \"name\": \"displayName\",
+      \"type\": \"string\"
+    },
+    {
+      \"name\": \"date\",
+      \"type\": \"long\"
+    },
+    {
+      \"name\": \"retweetCount\",
+      \"type\": \"int\"
+    },
+    {
+      \"name\": \"tweetText\",
+      \"type\": \"string\"
+     }
+  ]
+}
